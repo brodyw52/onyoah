@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet"><style>
+@keyframes cSpin{to{transform:rotate(360deg)}}
+@keyframes cRipple{from{transform:scale(0);opacity:.6}to{transform:scale(70);opacity:0}}
+@keyframes cDraw{to{stroke-dashoffset:0}}
+@keyframes cPop{0%{opacity:0;transform:scale(.6)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes cRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+body{margin:0;background:#0D1017}
+a{color:#4A9BF5;text-decoration:none}a:hover{text-decoration:underline}
+input::selection{background:transparent}
+</style></helmet>
+<div ref="{{ rootRef }}" onPointerMove="{{ onMove }}" onPointerLeave="{{ onLeave }}" style="position:relative;min-height:100vh;box-sizing:border-box;padding:140px 20px 80px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0D1017;color:#F3F5F9;font-family:'Nunito',system-ui,sans-serif">
+<canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+<div ref="{{ cardRef }}" style="position:relative;width:100%;max-width:640px;box-sizing:border-box;padding:clamp(24px,5vw,44px);background:#0D1017;border:2px solid #263047;border-radius:40px">
+<sc-if value="{{ idle }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;align-items:center;gap:32px">
+<h1 style="margin:0;font-family:'Fredoka',system-ui,sans-serif;font-weight:700;font-size:clamp(40px,8vw,68px);line-height:1;letter-spacing:-0.01em;text-align:center;text-wrap:balance">Get held accountable</h1>
+<div style="width:100%;display:flex;align-items:center;justify-content:center;gap:clamp(3px,1vw,8px)">
+<span style="font-family:'Fredoka',sans-serif;font-weight:500;font-size:clamp(30px,6vw,52px);line-height:1;color:#4A9BF5">(</span>
+<sc-for list="{{ g1 }}" as="c" hint-placeholder-count="3"><input type="text" inputMode="numeric" autoComplete="tel" aria-label="{{ c.label }}" value="{{ c.v }}" ref="{{ c.ref }}" onChange="{{ c.onChange }}" onKeyDown="{{ c.onKeyDown }}" onPaste="{{ c.onPaste }}" onFocus="{{ c.onFocus }}" style="flex:1 1 0;min-width:0;max-width:50px;height:clamp(48px,9vw,64px);box-sizing:border-box;padding:0;text-align:center;border-radius:16px;border:2px solid {{ c.bd }};background:{{ c.bg }};color:#0D1017;font:700 clamp(18px,4vw,28px) 'Fredoka',sans-serif;caret-color:#4A9BF5;outline:none;transform:{{ c.tf }};transition:transform 320ms cubic-bezier(0.34,1.56,0.64,1),background 160ms,border-color 160ms" style-focus="border-color:#F3F5F9"></sc-for>
+<span style="font-family:'Fredoka',sans-serif;font-weight:500;font-size:clamp(30px,6vw,52px);line-height:1;color:#4A9BF5;margin-right:clamp(2px,1vw,8px)">)</span>
+<sc-for list="{{ g2 }}" as="c" hint-placeholder-count="3"><input type="text" inputMode="numeric" autoComplete="tel" aria-label="{{ c.label }}" value="{{ c.v }}" ref="{{ c.ref }}" onChange="{{ c.onChange }}" onKeyDown="{{ c.onKeyDown }}" onPaste="{{ c.onPaste }}" onFocus="{{ c.onFocus }}" style="flex:1 1 0;min-width:0;max-width:50px;height:clamp(48px,9vw,64px);box-sizing:border-box;padding:0;text-align:center;border-radius:16px;border:2px solid {{ c.bd }};background:{{ c.bg }};color:#0D1017;font:700 clamp(18px,4vw,28px) 'Fredoka',sans-serif;caret-color:#4A9BF5;outline:none;transform:{{ c.tf }};transition:transform 320ms cubic-bezier(0.34,1.56,0.64,1),background 160ms,border-color 160ms" style-focus="border-color:#F3F5F9"></sc-for>
+<span style="flex:none;width:clamp(6px,1.6vw,12px);height:4px;border-radius:4px;background:#4A9BF5"></span>
+<sc-for list="{{ g3 }}" as="c" hint-placeholder-count="4"><input type="text" inputMode="numeric" autoComplete="tel" aria-label="{{ c.label }}" value="{{ c.v }}" ref="{{ c.ref }}" onChange="{{ c.onChange }}" onKeyDown="{{ c.onKeyDown }}" onPaste="{{ c.onPaste }}" onFocus="{{ c.onFocus }}" style="flex:1 1 0;min-width:0;max-width:50px;height:clamp(48px,9vw,64px);box-sizing:border-box;padding:0;text-align:center;border-radius:16px;border:2px solid {{ c.bd }};background:{{ c.bg }};color:#0D1017;font:700 clamp(18px,4vw,28px) 'Fredoka',sans-serif;caret-color:#4A9BF5;outline:none;transform:{{ c.tf }};transition:transform 320ms cubic-bezier(0.34,1.56,0.64,1),background 160ms,border-color 160ms" style-focus="border-color:#F3F5F9"></sc-for>
+</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+<span style="font-weight:800;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#A9B4C8">Harshness</span>
+<span style="font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px;color:#4A9BF5">{{ level }}</span>
+</div>
+<div role="slider" tabIndex="0" aria-label="Harshness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ pct }}" onPointerDown="{{ trackDown }}" onPointerMove="{{ trackMove }}" onPointerUp="{{ trackUp }}" onKeyDown="{{ trackKey }}" style="position:relative;height:40px;border-radius:9999px;background:#1A2233;cursor:pointer;touch-action:none;outline:none" style-focus="outline:2px solid #F3F5F9;outline-offset:3px">
+<div style="position:absolute;left:4px;top:4px;bottom:4px;width:{{ fillW }};border-radius:9999px;background:#4A9BF5"></div>
+<div style="position:absolute;top:4px;left:{{ knob }};width:32px;height:32px;border-radius:9999px;background:#F3F5F9;transform:{{ knobTf }};transition:transform 240ms cubic-bezier(0.34,1.56,0.64,1)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;color:#A9B4C8"><span>Soft</span><span>Savage</span></div>
+</div>
+<button onClick="{{ submit }}" disabled="{{ disabled }}" style="position:relative;overflow:hidden;width:100%;height:64px;border:0;border-radius:9999px;background:#1A2233;color:{{ btnInk }};font:600 20px 'Fredoka',sans-serif;cursor:{{ cursor }};transition:transform 240ms cubic-bezier(0.34,1.56,0.64,1),color 300ms" style-hover="transform:scale(1.02)" style-active="transform:scale(0.97)" style-focus="outline:2px solid #F3F5F9;outline-offset:3px">
+<span style="position:absolute;left:calc(50% - 450px);width:900px;height:900px;top:{{ liq }};border-radius:43%;background:#4A9BF5;animation:cSpin 7s linear infinite;transition:top 520ms cubic-bezier(0.34,1.56,0.64,1);pointer-events:none"></span>
+<sc-for list="{{ ripples }}" as="r" hint-placeholder-count="0"><span style="position:absolute;left:{{ r.x }}px;top:{{ r.y }}px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:42% 58% 55% 45%;background:#F3F5F9;animation:cRipple 900ms cubic-bezier(0.2,0.7,0.2,1) forwards;pointer-events:none"></span></sc-for>
+<span style="position:relative">{{ btnLabel }}</span>
+</button>
+</div>
+</sc-if>
+<sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;padding:12px 0">
+<div style="width:96px;height:96px;border-radius:9999px;background:#4A9BF5;display:flex;align-items:center;justify-content:center;animation:cPop 560ms cubic-bezier(0.34,1.56,0.64,1) both">
+<svg width="52" height="52" viewBox="0 0 52 52"><path d="M12 27 L22 37 L40 16" style="fill:none;stroke:#0D1017;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:46;stroke-dashoffset:46;animation:cDraw 360ms 380ms cubic-bezier(0.2,0.7,0.2,1) forwards"></path></svg>
+</div>
+<h2 style="margin:0;font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(36px,7vw,56px);line-height:1.02;animation:cRise 500ms 200ms cubic-bezier(0.2,0.7,0.2,1) both">You're in.</h2>
+<p style="margin:0;max-width:460px;font-weight:500;font-size:19px;line-height:1.5;text-wrap:pretty;animation:cRise 500ms 320ms cubic-bezier(0.2,0.7,0.2,1) both">Your coach will be reaching out to {{ phone }} shortly. Due to high demand, you are currently on the waitlist.</p>
+<button onClick="{{ reset }}" style="border:0;background:none;padding:10px 14px;border-radius:9999px;color:#4A9BF5;font:600 17px 'Fredoka',sans-serif;cursor:pointer;animation:cRise 500ms 440ms cubic-bezier(0.2,0.7,0.2,1) both" style-hover="background:#1A2233">Use a different number</button>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showFace&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;driftingBlobs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;defaultHarshness&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:35,&quot;min&quot;:0,&quot;max&quot;:100,&quot;step&quot;:5,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { digits: Array(10).fill(''), harsh: p.defaultHarshness ?? 35, status: 'idle', ripples: [], dragging: false };
+    this.inputs = []; this.ptr = null;
+    this.A = { h: 0.35, done: 0, send: 0, ph: 0, px: 0, py: 0, parts: [], prev: 'idle' };
+    this.floaters = [...Array(7).keys()].map(i => ({ fx: [0.08, 0.9, 0.16, 0.84, 0.5, 0.06, 0.95][i], fy: [0.2, 0.14, 0.82, 0.8, 0.95, 0.55, 0.5][i], r: 16 + (i * 37 % 26), s: i * 1.9 }));
+    const R10 = [...Array(10).keys()];
+    this.H = {
+      refs: R10.map(i => el => { this.inputs[i] = el; }),
+      change: R10.map(i => e => this.onChange(i, e)),
+      key: R10.map(i => e => this.onKey(i, e)),
+      paste: R10.map(i => e => { e.preventDefault(); this.fill(i, (e.clipboardData.getData('text') || '').replace(/\D/g, '')); }),
+      focus: e => { const t = e.target; setTimeout(() => t.select && t.select(), 0); },
+      root: el => { this.root = el; }, canvas: el => { this.canvas = el; }, card: el => { this.card = el; },
+      move: e => { this.ptr = { x: e.clientX, y: e.clientY }; },
+      leave: () => { this.ptr = null; },
+      down: e => { e.currentTarget.setPointerCapture && e.currentTarget.setPointerCapture(e.pointerId); this.setState({ dragging: true }); this.setHarsh(e); },
+      tmove: e => { if (this.state.dragging) this.setHarsh(e); },
+      up: () => this.setState({ dragging: false }),
+      tkey: e => {
+        const d = { ArrowLeft: -5, ArrowDown: -5, ArrowRight: 5, ArrowUp: 5 }[e.key];
+        if (d) { e.preventDefault(); this.setState(s => ({ harsh: Math.max(0, Math.min(100, s.harsh + d)) })); }
+      },
+      submit: e => this.submit(e),
+      reset: () => { this.setState({ digits: Array(10).fill(''), status: 'idle', ripples: [] }); setTimeout(() => this.focusAt(0), 50); }
+    };
+  }
+  focusAt(i) { const el = this.inputs[i]; if (el) el.focus(); }
+  fill(i, str) {
+    if (str.length === 11 && str[0] === '1') { str = str.slice(1); i = 0; }
+    if (!str) return;
+    const d = this.state.digits.slice(); let j = i;
+    for (const ch of str) { if (j > 9) break; d[j++] = ch; }
+    this.setState({ digits: d }); this.focusAt(Math.min(j, 9));
+  }
+  onChange(i, e) {
+    const v = e.target.value.replace(/\D/g, ''), cur = this.state.digits[i];
+    if (v.length > 1) {
+      const nv = cur && v.startsWith(cur) ? v.slice(cur.length) : v;
+      if (nv.length !== 1) return this.fill(i, nv);
+      const d = this.state.digits.slice(); d[i] = nv; this.setState({ digits: d }); if (i < 9) this.focusAt(i + 1);
+      return;
+    }
+    const d = this.state.digits.slice(); d[i] = v; this.setState({ digits: d });
+    if (v && i < 9) this.focusAt(i + 1);
+  }
+  onKey(i, e) {
+    const d = this.state.digits;
+    if (e.key === 'Backspace' && !d[i] && i > 0) { e.preventDefault(); const nd = d.slice(); nd[i - 1] = ''; this.setState({ digits: nd }); this.focusAt(i - 1); }
+    else if (e.key === 'ArrowLeft' && i > 0) { e.preventDefault(); this.focusAt(i - 1); }
+    else if (e.key === 'ArrowRight' && i < 9) { e.preventDefault(); this.focusAt(i + 1); }
+    else if (e.key === 'Enter' && d.every(Boolean)) this.submit(null);
+  }
+  setHarsh(e) {
+    const r = e.currentTarget.getBoundingClientRect();
+    this.setState({ harsh: Math.round(Math.max(0, Math.min(1, (e.clientX - r.left - 20) / (r.width - 40))) * 100) });
+  }
+  submit(e) {
+    const s = this.state;
+    if (!s.digits.every(Boolean) || s.status !== 'idle') return;
+    let x = 280, y = 32;
+    if (e && e.currentTarget && e.clientX) { const r = e.currentTarget.getBoundingClientRect(); x = e.clientX - r.left; y = e.clientY - r.top; }
+    const id = Date.now();
+    this.setState(st => ({ status: 'sending', ripples: [...st.ripples, { id, x, y }] }));
+    setTimeout(() => this.setState(st => ({ ripples: st.ripples.filter(r => r.id !== id) })), 950);
+    setTimeout(() => this.setState({ status: 'done' }), 1300);
+  }
+  componentDidMount() {
+    const loop = t => {
+      const dt = Math.min(0.05, (t - (this.last || t)) / 1000); this.last = t;
+      this.draw(dt, t / 1000);
+      this.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  blob(ctx, cx, cy, R, ph, amp, sp, seed) {
+    const N = 12, pts = [];
+    for (let i = 0; i < N; i++) {
+      const a = i / N * Math.PI * 2;
+      const f = 1 + amp * (0.6 * Math.sin(ph + i * 1.7 + seed) + 0.4 * Math.sin(ph * 1.31 + i * 2.9 + seed * 2.1))
+        + (i % 2 ? 1 : -1) * sp * (0.6 + 0.4 * Math.sin(ph * 2.7 + i + seed));
+      pts.push([cx + Math.cos(a) * R * f, cy + Math.sin(a) * R * f]);
+    }
+    const mid = (p, q) => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+    ctx.beginPath();
+    const m = mid(pts[N - 1], pts[0]); ctx.moveTo(m[0], m[1]);
+    for (let i = 0; i < N; i++) { const q = mid(pts[i], pts[(i + 1) % N]); ctx.quadraticCurveTo(pts[i][0], pts[i][1], q[0], q[1]); }
+    ctx.closePath();
+  }
+  draw(dt, T) {
+    const el = this.canvas, card = this.card; if (!el || !card) return;
+    const w = el.clientWidth, h = el.clientHeight; if (!w) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (el.width !== Math.round(w * dpr) || el.height !== Math.round(h * dpr)) { el.width = Math.round(w * dpr); el.height = Math.round(h * dpr); }
+    const ctx = el.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    const er = el.getBoundingClientRect(), cr = card.getBoundingClientRect(), sc = er.width / w || 1;
+    const cl = (cr.left - er.left) / sc, ct = (cr.top - er.top) / sc, cw = cr.width / sc, ch = cr.height / sc;
+    const s = this.state, A = this.A, face = this.props.showFace ?? true;
+    A.h += (s.harsh / 100 - A.h) * 0.08;
+    A.done += ((s.status === 'done' ? 1 : 0) - A.done) * 0.05;
+    A.send += ((s.status === 'sending' ? 1 : 0) - A.send) * 0.1;
+    A.ph += dt * (0.5 + 2.8 * A.h) * (1 - 0.5 * A.done) + dt * A.send * 4;
+    const P = this.ptr ? { x: (this.ptr.x - er.left) / sc, y: (this.ptr.y - er.top) / sc } : null;
+    const tx = P ? (P.x - w / 2) / w : 0, ty = P ? (P.y - h / 2) / h : 0;
+    A.px += (tx - A.px) * 0.05; A.py += (ty - A.py) * 0.05;
+    if (this.props.driftingBlobs ?? true) {
+      ctx.fillStyle = '#18233A';
+      this.floaters.forEach(f => this.blob(ctx, w * f.fx + Math.sin(T * 0.3 + f.s) * 30 - A.px * 40, h * f.fy + Math.cos(T * 0.24 + f.s) * 26 - A.py * 40, f.r, A.ph * 0.8 + f.s, 0.14, 0, f.s) || ctx.fill());
+    }
+    const bounce = 1 + 0.05 * A.done + 0.035 * A.send * Math.sin(T * 14);
+    const R = Math.max(cw * 0.6, ch * 0.56) * bounce;
+    const cx = cl + cw / 2 + A.px * 50, top = ct - 112 - 14 * A.done + Math.sin(T * 1.3) * 5, cy = top + R + A.py * 20;
+    const amp = (0.04 + 0.1 * A.h) * (1 - 0.5 * A.done), sp = 0.07 * A.h * A.h * (1 - A.done);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(74,155,245,0.2)'; this.blob(ctx, cx, cy, R * 1.3, A.ph * 0.6, amp * 1.4, sp, 4); ctx.stroke();
+    ctx.strokeStyle = 'rgba(74,155,245,0.45)'; this.blob(ctx, cx, cy, R * 1.14, A.ph * 0.8, amp * 1.2, sp, 2); ctx.stroke();
+    const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.5, R * 0.1, cx, cy, R * 1.1);
+    g.addColorStop(0, '#7DB8FA'); g.addColorStop(0.55, '#4A9BF5'); g.addColorStop(1, '#2F7FE0');
+    ctx.fillStyle = g; this.blob(ctx, cx, cy, R, A.ph, amp, sp, 0); ctx.fill();
+    if (face) {
+      const ey = top + 62, blink = (T % 4.2) < 0.13 ? 0.12 : 1;
+      [-1, 1].forEach(sd => {
+        const ex = cx + sd * 48;
+        if (A.done > 0.5) {
+          ctx.strokeStyle = '#0D1017'; ctx.lineWidth = 7; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.arc(ex, ey + 6, 18, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke();
+          return;
+        }
+        ctx.fillStyle = '#F3F5F9'; ctx.beginPath(); ctx.ellipse(ex, ey, 22, 22 * blink, 0, 0, Math.PI * 2); ctx.fill();
+        let dx = P ? P.x - ex : 0, dy = P ? P.y - ey : 40; const dl = Math.hypot(dx, dy) || 1; dx = dx / dl * 10; dy = dy / dl * 10 * blink;
+        ctx.fillStyle = '#0D1017'; ctx.beginPath(); ctx.ellipse(ex + dx, ey + dy, 10, 10 * blink, 0, 0, Math.PI * 2); ctx.fill();
+        if (A.h > 0.12) {
+          ctx.strokeStyle = '#0D1017'; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.globalAlpha = Math.min(1, (A.h - 0.12) * 4);
+          ctx.beginPath(); ctx.moveTo(ex + sd * 26, ey - 32 - 8 * A.h); ctx.lineTo(ex - sd * 20, ey - 30 + 16 * A.h); ctx.stroke(); ctx.globalAlpha = 1;
+        }
+      });
+    }
+    if (s.status === 'done' && A.prev !== 'done') {
+      for (let i = 0; i < 40; i++) { const a = Math.random() * Math.PI * 2, v = 300 + Math.random() * 600; A.parts.push({ x: cl + cw / 2, y: ct + ch / 2, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 250, r: 5 + Math.random() * 10, life: 1, c: i % 3 ? '#4A9BF5' : '#F3F5F9' }); }
+    }
+    A.prev = s.status;
+    A.parts = A.parts.filter(p => p.life > 0);
+    A.parts.forEach(p => { p.vy += 900 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt * 0.6; ctx.globalAlpha = Math.max(0, Math.min(1, p.life * 2)); ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); });
+    ctx.globalAlpha = 1;
+  }
+  renderVals() {
+    const s = this.state, H = this.H, n = s.digits.filter(Boolean).length, p = s.harsh, d = s.digits.join('');
+    const cells = s.digits.map((v, i) => ({ v, ref: H.refs[i], onChange: H.change[i], onKeyDown: H.key[i], onPaste: H.paste[i], onFocus: H.focus, label: 'Digit ' + (i + 1), bd: v ? '#4A9BF5' : '#33405C', bg: v ? '#4A9BF5' : '#F3F5F9', tf: v ? 'translateY(-4px)' : 'none' }));
+    return {
+      g1: cells.slice(0, 3), g2: cells.slice(3, 6), g3: cells.slice(6),
+      level: p < 20 ? 'Hug it out' : p < 40 ? 'Friendly nudge' : p < 60 ? 'Firm' : p < 80 ? 'Tough love' : 'ON YO AH\n',
+      pct: p, knob: `calc(4px + (100% - 40px) * ${p / 100})`, fillW: `calc(32px + (100% - 40px) * ${p / 100})`,
+      knobTf: s.dragging ? 'scale(1.2)' : 'none',
+      liq: n === 10 ? '-28px' : n === 0 ? '76px' : 64 - n * 2 + 'px',
+      btnInk: n === 10 ? '#0D1017' : '#F3F5F9',
+      disabled: n < 10 || s.status !== 'idle', cursor: n < 10 ? 'not-allowed' : 'pointer',
+      btnLabel: s.status === 'sending' ? 'Finding your coach…' : n < 10 ? `${10 - n} digits to go` : 'Get my coach',
+      ripples: s.ripples, idle: s.status !== 'done', done: s.status === 'done',
+      phone: `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`,
+      submit: H.submit, reset: H.reset, rootRef: H.root, canvasRef: H.canvas, cardRef: H.card,
+      onMove: H.move, onLeave: H.leave, trackDown: H.down, trackMove: H.tmove, trackUp: H.up, trackKey: H.tkey
+    };
+  }
+}
+</script>
+</body>
+</html>
